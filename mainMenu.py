@@ -41,6 +41,10 @@ game_paused = False
 username = ""
 with open("signedInAs.txt","r") as file:
     username=file.read()
+#back button
+backButtonImage = pygame.image.load("images/buttons/BackButton.PNG")
+backButtonImage = pygame.transform.scale(backButtonImage,(50,50))
+backButton = Button(50,50,backButtonImage)
 #game loop
 running = True
 while running: 
@@ -68,6 +72,9 @@ while running:
             quit()
         if edit_button.draw(display):
             os.startfile("NewlevelEditor.py")
+            quit()
+        if backButton.draw(display):
+            os.startfile("signin.py")
             quit()
     else:
 #draws text that appears when the game is first ran

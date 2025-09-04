@@ -21,7 +21,10 @@ class Player:
     def drawtext(text, font, textcolour, x, y):
         txt = font.render(text, True, textcolour)
         display.blit(txt, (x,y))
-    def __init__(self,x,y):
+    def __init__(self,x,y):    
+        self.moneySound = pygame.mixer.Sound("sounds/coin_2-89099.mp3")
+        self.jumpSound = pygame.mixer.Sound("sounds/maro-jump-sound-effect_1.mp3")
+        self.levelCompleteSound = pygame.mixer.Sound("sounds/mixkit-game-level-completed-2059.wav")
         self.startx = x
         self.starty = y
         with open("selectedsprite.txt","r") as file:
@@ -130,7 +133,8 @@ class Player:
                 #when the player touches a piece of money, it collects it and the money is gone, therefore we need to update that both onscreen and in the money tile list
                 levelObject.moneyTileList.remove(moneyTile)
                 levelObject.tileList.remove(moneyTile)
-                self.money += 10
+                self.money += 25
+                self.moneySound.play()
         for lavaTile in levelObject.lavaTileList:
             #lava kills you instantly, resets your position, takes 1000 of your money, and doesnt reset the money back to where it used to be, in the future i will add a deathscreen
             if lavaTile[1].colliderect(self.playerRect):
@@ -145,6 +149,7 @@ class Player:
         for levelEndTile in levelObject.levelEndTileList:
             if levelEndTile[1].colliderect(self.playerRect):
                 self.money +=1000
+                self.levelCompleteSound.play()
                 self.levelCompleted = True
                 username = ""
                 with open("signedInAs.txt","r") as file:
@@ -197,6 +202,7 @@ class Player:
         if userInput[pygame.K_SPACE] and self.jumping == False and dy == 0 and self.levelCompleted == False:
             self.jumping = True
             self.speedY = -speedy
+            self.jumpSound.play()
         if userInput[pygame.K_SPACE] == False:
             self.jumping = False
         #render player
