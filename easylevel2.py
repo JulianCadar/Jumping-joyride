@@ -43,6 +43,9 @@ font = pygame.font.SysFont("arialblack",25)
 backButtonImage = pygame.image.load("images/buttons/BackButton.PNG")
 backButtonImage = pygame.transform.scale(backButtonImage,(50,50))
 backButton = Button(50,50,backButtonImage)
+pygame.mixer.music.load("sounds/soundtrack.mp3")
+pygame.mixer.music.set_volume(0.25)
+pygame.mixer.music.play(start=0.0, loops=-1)
 #game loop and oading how much money player has
 while running:
     display.blit(background,(0,0))
@@ -54,6 +57,7 @@ while running:
     player.update(level2)
     
     if player.levelCompleted:
+        
         Player.drawtext(f"Level Complete!",font,(0,0,0),400,450)
         nextLevelImage = pygame.image.load("images/buttons/NextLevelButton.png")
         nextLevelImage = pygame.transform.scale(nextLevelImage,(100,50))
@@ -64,9 +68,11 @@ while running:
         with open("lastLevelCompleted.txt","w") as file:
             file.write('easy2')
         if nextLevelButton.draw(display):
+            pygame.mixer.music.stop()
             os.startfile("easylevel3.py")
             quit()
         if LevelSelectionButton.draw(display):
+            pygame.mixer.music.stop()
             os.startfile("leveldifficultyselector.py")
             quit()
     if backButton.draw(display):

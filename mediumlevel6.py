@@ -39,7 +39,9 @@ pygame.display.set_caption("level 16")
 backButtonImage = pygame.image.load("images/buttons/BackButton.PNG")
 backButtonImage = pygame.transform.scale(backButtonImage,(50,50))
 backButton = Button(50,50,backButtonImage)
-
+pygame.mixer.music.load("sounds/soundtrack.mp3")
+pygame.mixer.music.set_volume(0.25)
+pygame.mixer.music.play(start=0.0, loops=-1)
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -58,9 +60,11 @@ while running:
         with open("lastLevelCompleted.txt","w") as file:
             file.write('medium6')
         if nextLevelButton.draw(display):
+            pygame.mixer.music.stop()
             os.startfile("mediumlevel7.py")
             quit()
         if LevelSelectionButton.draw(display):
+            pygame.mixer.music.stop()
             os.startfile("leveldifficultyselector.py")
             quit()
     if backButton.draw(display):

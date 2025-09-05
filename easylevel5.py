@@ -27,7 +27,9 @@ from buttonClass import Button
 from playerClass import Player
 from levelClass import Level
 import os
-
+pygame.mixer.music.load("sounds/soundtrack.mp3")
+pygame.mixer.music.set_volume(0.25)
+pygame.mixer.music.play(start=0.0, loops=-1)
 level5 = Level(data)
 speedx = 5
 speedy = 13
@@ -65,9 +67,11 @@ while running:
         with open("lastLevelCompleted.txt","w") as file:
             file.write('easy5')
         if nextLevelButton.draw(display):
+            pygame.mixer.music.stop()
             os.startfile("easylevel6.py")
             quit()
         if LevelSelectionButton.draw(display):
+            pygame.mixer.music.stop()
             os.startfile("leveldifficultyselector.py")
             quit()
     if backButton.draw(display):

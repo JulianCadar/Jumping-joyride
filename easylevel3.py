@@ -40,6 +40,9 @@ font = pygame.font.SysFont("arialblack",25)
 backButtonImage = pygame.image.load("images/buttons/BackButton.PNG")
 backButtonImage = pygame.transform.scale(backButtonImage,(50,50))
 backButton = Button(50,50,backButtonImage)
+pygame.mixer.music.load("sounds/soundtrack.mp3")
+pygame.mixer.music.set_volume(0.25)
+pygame.mixer.music.play(start=0.0, loops=-1)
 while running:
     display.blit(background,(0,0))
     for event in pygame.event.get():
@@ -60,9 +63,11 @@ while running:
         with open("lastLevelCompleted.txt","w") as file:
             file.write('easy3')
         if nextLevelButton.draw(display):
+            pygame.mixer.music.stop()
             os.startfile("easylevel4.py")
             quit()
         if LevelSelectionButton.draw(display):
+            pygame.mixer.music.stop()
             os.startfile("leveldifficultyselector.py")
             quit()
     if backButton.draw(display):

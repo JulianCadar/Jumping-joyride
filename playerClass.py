@@ -25,8 +25,9 @@ class Player:
         self.moneySound = pygame.mixer.Sound("sounds/coin_2-89099.mp3")
         self.jumpSound = pygame.mixer.Sound("sounds/maro-jump-sound-effect_1.mp3")
         self.levelCompleteSound = pygame.mixer.Sound("sounds/mixkit-game-level-completed-2059.wav")
-        self.moneySound.set_volume(0.5)
-        self.jumpSound.set_volume(0.5)
+
+        self.moneySound.set_volume(0.05)
+        self.jumpSound.set_volume(0.05)
         self.startx = x
         self.starty = y
         with open("selectedsprite.txt","r") as file:
@@ -52,7 +53,7 @@ class Player:
         self.colliding = False
         self.levelCompleted = False
         
-    def update(self,levelObject:Level):
+    def update(self,levelObject:Level):        
         #get key presses
         userInput = pygame.key.get_pressed()
         dx = 0
