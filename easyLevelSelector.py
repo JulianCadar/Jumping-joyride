@@ -49,7 +49,7 @@ Level10Button = Button(1200,450,L10Button)
 backButtonImage = pygame.image.load("images/buttons/BackButton.PNG")
 backButtonImage = pygame.transform.scale(backButtonImage,(50,50))
 backButton = Button(50,50,backButtonImage)
-#wish there was a cleaner way to implement all this shit above but its the best i could do 
+#wish there was a cleaner way to implement all of the above images and buttons but it's the best i could do 
 while running:
     display.blit(background,(0,0))
     for event in pygame.event.get():

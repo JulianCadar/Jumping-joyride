@@ -87,12 +87,17 @@ def submit():
                         drawErrorMessage("username or email already exists")
                         break
                 else:
-                    userdata = [(usernameText,passwordText,userID,accountType,emailText)]
-                    cursor.execute("INSERT OR REPLACE INTO Login VALUES(?,?,?,?,?)",userdata[0])
-                    connection.commit()
-                    drawErrorMessage(f"Account Created Successfully.")
-                    cursor.execute("INSERT OR REPLACE INTO Ownership VALUES(?,?,?,?)",(usernameText,"1",str(datetime.datetime.now()),500))
-                    connection.commit()
+                    for command in ["SELECT","DROP","DELETE","INSERT","REPLACE","CREATE"]:
+                        if command in usernameText or command in passwordText or command in emailText:
+                            drawErrorMessage("invalid keywords found in username,password, or email")
+                            break
+                    else:
+                        userdata = [(usernameText,passwordText,userID,accountType,emailText)]
+                        cursor.execute("INSERT OR REPLACE INTO Login VALUES(?,?,?,?,?)",userdata[0])
+                        connection.commit()
+                        drawErrorMessage(f"Account Created Successfully.")
+                        cursor.execute("INSERT OR REPLACE INTO Ownership VALUES(?,?,?,?)",(usernameText,"1",str(datetime.datetime.now()),500))
+                        connection.commit()
                     
 #submit button
 SubmitButton = tk.Button(window,text = "Submit",width= 5,height=1,command=submit)
