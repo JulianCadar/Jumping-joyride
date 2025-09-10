@@ -25,9 +25,11 @@ cursor.execute(newTable)
 cursor.execute(progressTable)
 cursor.execute(ownershipTable)
 connection.commit()
-#for row in cursor.execute("SELECT * FROM Login"):
-#   print(row)
-#for row in cursor.execute("SELECT * FROM Progress"):
-   #print(row)
-for row in cursor.execute("SELECT * FROM Ownership"):
-   print(row)
+for row in cursor.execute("SELECT * FROM Login"):
+  print(row)
+print("---------------------")
+# for row in cursor.execute("SELECT * FROM Progress"):
+#    print(row)
+# print("---------------------")
+# for row in cursor.execute("SELECT * FROM Ownership"):
+#    print(row)
