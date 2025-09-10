@@ -2,11 +2,13 @@ import pygame
 from buttonClass import Button
 from pygame.locals import *
 import os
+from playerClass import Player
 pygame.init()
 running = True
 playButtonImage = pygame.image.load('images/buttons/new_play_button.PNG').convert_alpha()
 playButtonImage = pygame.transform.scale(playButtonImage,(100,100))
 playbutton = Button(920,600,playButtonImage)
+errorFont = pygame.font.SysFont("arial",25)
 #display varaibles
 displayWidth = 900
 displayHeight = 900
@@ -119,13 +121,16 @@ while running:
         from leveldatatext import levelData
     #test level
     if playbutton.draw(display):
-        print(levelData)
-        with open("leveldatatext.py","w") as file:
-            file.write(f'levelData = {levelData}\n')
-            os.startfile('levelTester.py')
-            quit()
-        pygame.display.update()
-        pygame.time.delay(15)    
+        if 7 not in levelData:
+            Player.drawtext("Level requires an end Jewel",errorFont,(255,0,0),400,500)
+        else:
+            print(levelData)
+            with open("leveldatatext.py","w") as file:
+                file.write(f'levelData = {levelData}\n')
+                os.startfile('levelTester.py')
+                quit()
+            pygame.display.update()
+            pygame.time.delay(15)    
     if backButton.draw(display):
         os.startfile("mainMenu.py")
         quit()

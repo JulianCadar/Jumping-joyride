@@ -22,8 +22,10 @@ pygame.display.set_caption("Test level")
 backButtonImage = pygame.image.load("images/buttons/BackButton.PNG")
 backButtonImage = pygame.transform.scale(backButtonImage,(50,50))
 backButton = Button(50,50,backButtonImage)
-
-
+player.isLevelTested = True
+pygame.mixer.music.load("sounds/soundtrack.mp3")
+pygame.mixer.music.set_volume(0.25)
+pygame.mixer.music.play(start=0.0, loops=-1)
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -34,6 +36,7 @@ while running:
     if player.levelCompleted:
         Player.drawtext(f"Level Complete!",font,(0,0,0),100,450)
     if backButton.draw(display):
+        pygame.mixer.music.stop()
         os.startfile("NewLevelEditor.py")
         quit()
     clock.tick(60)

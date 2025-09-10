@@ -52,6 +52,7 @@ class Player:
         self.money = int(moneyArr[-1][0])
         self.colliding = False
         self.levelCompleted = False
+        self.isLevelTested = False
         
     def update(self,levelObject:Level):        
         #get key presses
@@ -151,28 +152,29 @@ class Player:
         #in the future i will add a way to register level completion completely, but this is fine for now
         for levelEndTile in levelObject.levelEndTileList:
             if levelEndTile[1].colliderect(self.playerRect):
-                self.money +=1000
                 self.levelCompleteSound.play()
                 self.levelCompleted = True
-                username = ""
-                with open("signedInAs.txt","r") as file:
-                    username = file.read()
-                levelObject.levelEndTileList.remove(levelEndTile)
-                levelObject.tileList.remove(levelEndTile)
-                lastLevelCompleted = ''
-                with open("lastLevelCompleted.txt","r") as file:
-                    lastLevelCompleted = file.read()
-                cursor.execute("INSERT OR REPLACE INTO Progress VALUES(?,?,?)",(username,f"Level {lastLevelCompleted}",currentDate))
-                connection.commit()
-                iconsOwned = []
-                for row in cursor.execute("SELECT ItemOwned FROM Ownership WHERE Username = ?",(username,)):
-                    iconsOwned.append(row)
-                lastOwnedIcons = []
-                for row in iconsOwned[-1]:
-                    lastOwnedIcons.append(row)
-                lastOwnedIconsString = "".join(set(lastOwnedIcons))
-                cursor.execute("INSERT OR REPLACE INTO Ownership VALUES(?,?,?,?)",(username,lastOwnedIconsString,currentDate,str(self.money)))
-                connection.commit()
+                if not self.isLevelTested:                
+                    self.money +=1000
+                    username = ""
+                    with open("signedInAs.txt","r") as file:
+                        username = file.read()
+                    levelObject.levelEndTileList.remove(levelEndTile)
+                    levelObject.tileList.remove(levelEndTile)
+                    lastLevelCompleted = ''
+                    with open("lastLevelCompleted.txt","r") as file:
+                        lastLevelCompleted = file.read()
+                    cursor.execute("INSERT OR REPLACE INTO Progress VALUES(?,?,?)",(username,f"Level {lastLevelCompleted}",currentDate))
+                    connection.commit()
+                    iconsOwned = []
+                    for row in cursor.execute("SELECT ItemOwned FROM Ownership WHERE Username = ?",(username,)):
+                        iconsOwned.append(row)
+                    lastOwnedIcons = []
+                    for row in iconsOwned[-1]:
+                        lastOwnedIcons.append(row)
+                    lastOwnedIconsString = "".join(set(lastOwnedIcons))
+                    cursor.execute("INSERT OR REPLACE INTO Ownership VALUES(?,?,?,?)",(username,lastOwnedIconsString,currentDate,str(self.money)))
+                    connection.commit()
                 
         #water makes you bounce up a little bit
         for waterTile in levelObject.waterTileList:
