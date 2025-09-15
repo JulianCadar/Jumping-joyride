@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import datetime
 from levelClass import Level
+import os
 pygame.init()
 defaultPlayerSize = (25,25)
 currentDate = datetime.datetime.now()
@@ -36,6 +37,9 @@ class Player:
         username = ""
         with open("signedInAs.txt","r") as file:
             username = file.read()
+            if username =="":
+                os.startfile("loginGui.py")
+                quit()
         moneyArr = []
         for row in cursor.execute("SELECT CurrentBalance FROM Ownership WHERE Username = ?",(username,)):
             moneyArr.append(row)

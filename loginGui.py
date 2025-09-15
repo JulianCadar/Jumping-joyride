@@ -22,12 +22,18 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    
-    if sign_up_button.draw(display):
-        running = False
-        os.system("signup.py")
-    if login_button.draw(display):
-        running = False
-        os.system("signin.py")
+    with open("signedInAs.txt","r") as file:
+        if file.read() == "":
+            if sign_up_button.draw(display):
+                running = False
+                os.startfile("signup.py")
+                quit()
+            if login_button.draw(display):
+                running = False
+                os.startfile("signin.py")
+                quit()
+        else:
+            os.startfile("mainMenu.py")
+            quit()
     pygame.display.update()
 pygame.quit()

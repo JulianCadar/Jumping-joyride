@@ -30,17 +30,23 @@ infoButton = pygame.image.load('images/buttons/info_button.png').convert_alpha()
 infoButton = pygame.transform.scale(infoButton,defaultButtonSize)
 editButton = pygame.image.load("images/buttons/editIcon.png").convert_alpha()
 editButton = pygame.transform.scale(editButton,defaultButtonSize)
+accountDeactivateButton = pygame.image.load("images/buttons/deactivateAccountButton.PNG")
+accountDeactivateButton = pygame.transform.scale(accountDeactivateButton,(150,100))
 #button objects
 play_button = Button(800,450, playButton)
 options_button = Button(500,450 ,optionsButton)
 skins_button = Button(1000, 450, skinsButton)
 info_button = Button(1200, 100, infoButton)
 edit_button = Button(1500,800,editButton)
+account_deactivate_button = Button(1350,100,accountDeactivateButton)
 game_paused = False
 #get username
 username = ""
 with open("signedInAs.txt","r") as file:
     username=file.read()
+    if username == "":
+        os.startfile("loginGui.py")
+        quit()
 #back button
 backButtonImage = pygame.image.load("images/buttons/BackButton.PNG")
 backButtonImage = pygame.transform.scale(backButtonImage,(50,50))
@@ -74,7 +80,12 @@ while running:
             os.startfile("NewlevelEditor.py")
             quit()
         if backButton.draw(display):
+            with open("signedInAs.txt","w") as file:
+                file.write("")
             os.startfile("signin.py")
+            quit()
+        if account_deactivate_button.draw(display):
+            os.startfile("accountDeactivator.py")
             quit()
     else:
 #draws text that appears when the game is first ran

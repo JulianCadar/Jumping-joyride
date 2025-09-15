@@ -17,7 +17,12 @@ money = 0
 background = pygame.image.load("images/shop_bg.png")
 background = pygame.transform.scale(background,(1200,900))
 #get user balance and username
-username = open("signedInAs.txt", "r").read()
+username = ""
+with open("signedInAs.txt","r") as file:
+    username = file.read()
+    if username == "":
+        os.startfile("loginGui.py")
+        quit()
 moneyArr = []
 for row in cursor.execute("SELECT CurrentBalance FROM Ownership WHERE Username = ?", (username,)):
     moneyArr.append(row)

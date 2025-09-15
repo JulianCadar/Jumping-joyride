@@ -4,6 +4,10 @@ from pygame.locals import *
 import os
 from playerClass import Player
 pygame.init()
+with open("signedInAs.txt", "r") as usernameFile:
+    if usernameFile.read() == "":
+        os.startfile("loginGui.py")
+        quit()
 running = True
 playButtonImage = pygame.image.load('images/buttons/new_play_button.PNG').convert_alpha()
 playButtonImage = pygame.transform.scale(playButtonImage,(100,100))
@@ -121,16 +125,14 @@ while running:
         from leveldatatext import levelData
     #test level
     if playbutton.draw(display):
-        if 7 not in levelData:
-            Player.drawtext("Level requires an end Jewel",errorFont,(255,0,0),400,500)
-        else:
-            print(levelData)
-            with open("leveldatatext.py","w") as file:
-                file.write(f'levelData = {levelData}\n')
-                os.startfile('levelTester.py')
+        for levelRow in levelData:
+            if 7 in levelRow:
+                with open("leveldatatext.py","w") as file:
+                    file.write(f"levelData = {levelData}")
+                os.startfile("leveltester.py")
                 quit()
-            pygame.display.update()
-            pygame.time.delay(15)    
+        else:
+            Player.drawtext("Level needs an end jewel",errorFont,(255,0,0),200,450)
     if backButton.draw(display):
         os.startfile("mainMenu.py")
         quit()

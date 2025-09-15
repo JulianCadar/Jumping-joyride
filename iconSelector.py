@@ -19,6 +19,9 @@ backButtonImage = pygame.transform.scale(backButtonImage,(50,50))
 backButton = Button(50,50,backButtonImage)
 with open("signedInAs.txt","r") as file:
     username = file.read()
+    if username == "":
+        os.startfile("loginGui.py")
+        quit()
 #get owned icons
 iconsOwned = []
 for row in cursor.execute("SELECT ItemOwned FROM Ownership WHERE Username = ?",(username,)):

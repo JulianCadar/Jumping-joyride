@@ -23,6 +23,8 @@ def submit():
     match(deactivateText):
         case "yes":
             drawErrorMessage("account deactivated")
+            with open("signedInAs.txt","w") as file:
+                file.write("")
             cursor.execute("DELETE FROM Login WHERE Username = ?",(username,))
             cursor.execute("DELETE FROM Progress WHERE Username = ?",(username,))
             cursor.execute("DELETE FROM Ownership WHERE Username = ?",(username,))
