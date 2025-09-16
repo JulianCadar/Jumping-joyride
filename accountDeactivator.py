@@ -5,6 +5,9 @@ connection = sqlite3.connect("userdata.db")
 cursor = connection.cursor()
 with open("signedInAs.txt","r") as file:
     username = file.read()
+    if username == "":
+        os.startfile("loginGui.py")
+        quit()
 def drawErrorMessage(errMessage):
     newLabel = tk.Label(window, text=errMessage, highlightcolor="#ff0000")
     newLabel.place(x=225,y=275)
